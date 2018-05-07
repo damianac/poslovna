@@ -25,7 +25,7 @@ import { GetPostDetailQuery } from '../graphql/queries';
 
 export class postDetailComponent implements OnInit, OnDestroy {
     public pageTitle: string = 'Post detail:';
-    public comments: [ string ];
+    public comments = new Array<string>();
     public post: any;
     public errorMessage: string;
     private apollo: Apollo;
@@ -36,10 +36,12 @@ export class postDetailComponent implements OnInit, OnDestroy {
     public id;
     // Inject Angular2Apollo service
     constructor(apollo: Apollo, private route: ActivatedRoute) {
+
         this.apollo = apollo;
     }
 
     public ngOnInit(): void {
+        //this.comments.push("TEST");
         this.sub = this.route.params.subscribe(params => {
             this.id = params['id'];
         });
@@ -50,6 +52,37 @@ export class postDetailComponent implements OnInit, OnDestroy {
             this.post = data.post;
         });
     }
+    public addComment() {
+      let comment = prompt('Enter comment');
+      if (comment != null && comment != "") {
+            this.comments.push(comment);
+      }
+    }
+    public deleteComment(comment: string) {
+      console.log(comment);
+      let i = 0;
+      for(let comm in this.comments) {
+        if(this.comments[comm] === comment) {
+          console.log('found');
+          this.comments.splice(i);
+          break;
+        }
+        ++i;
+      }
+    }
+    public editComment(comment: string) {
+      console.log(comment);
+      let i = 0;
+      for(let comm in this.comments) {
+        if(this.comments[comm] === comment) {
+          let newComment = prompt('Edit comment', comment);
+          this.comments[comm] = newComment;
+          break;
+        }
+        ++i;
+      }
+    }
+
     ngOnDestroy() {
         this.sub.unsubscribe();
     }

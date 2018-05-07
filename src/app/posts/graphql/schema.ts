@@ -20,6 +20,12 @@ export interface PostsInterface {
   }> | null;
 }
 
+export interface CommentsInterface {
+  comments: Array<{
+    content: string | null
+  }> | null;
+}
+
 export interface PostByIdInterface {
     post:{
       id: string,

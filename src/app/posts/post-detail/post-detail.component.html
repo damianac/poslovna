@@ -10,9 +10,12 @@
         <p>{{post.content}}</p>
       </mat-card-content>
       <h1>Comments</h1>
-      <mat-card-content ng-repeat="comment in comments">
+      <button class="addBtn" mat-fab (click)='addComment()'> <mat-icon>add</mat-icon></button>
+      <mat-card *ngFor="let comment of comments">
         <p>{{comment}}</p>
-      </mat-card-content>
+        <span><button mat-button (click)='deleteComment(comment)'><mat-icon>delete</mat-icon></button></span>
+        <span><button mat-button (click)='editComment(comment)'><mat-icon>edit</mat-icon></button></span>
+      </mat-card>
     </mat-card>
   </div>
 </div>
